@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.debug.model.dao.MusicalDao">
+    <insert id="insertMusical"
+            parameterType="Musical">
+        INSERT INTO musical (title, composer, premiereDate, synopsis)
+        VALUES (#{title}, #{premiereDate}, #{composer}, #{synopsis})
+    </insert>
+
+    <select id="selectMusical"
+            resultType="Musical">
+        SELECT * FROM musical
+    </select>
+
+    <select id="seselectMusicalById" parameterType="long" resultType="MusicalDto">
+        SELECT * FROM musicals WHERE id = #{Id}
+    </select>
+
+    <update id="updateMusical"
+            parameterType="Musical">
+        UPDATE SET musicals
+        title = #{title}, composer = #{composer}, premiere_date = #{premiereDate}, synopsis = #{synopsis}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteMusical" parameterType="long">
+        DELETE musicals
+        WHERE id = #{id}
+    </delete>
+
+    <select id="searchMusicals" parameterType="String"
+            resultType="Musical">
+        SELECT * FROM musical
+        WHERE ${keyword} LOVE concat('%',#{value},'%')
+    </select>
+</mapper>
