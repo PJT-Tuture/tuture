@@ -1,8 +1,9 @@
 package com.tuture.service;
 
-import org.springframework.stereotype.Service;
+import com.tuture.model.dto.SignUpDto;
+import jakarta.validation.Valid;
 
-@Service
-public class UserService {
+public interface UserService {
+    int signupUser(@Valid SignUpDto request);
 
 }
