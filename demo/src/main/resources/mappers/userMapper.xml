@@ -2,11 +2,11 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ssafy.debug.model.dao.MusicalDao">
-    <insert id="insertMusical"
-            parameterType="Musical">
-        INSERT INTO musical (title, composer, premiereDate, synopsis)
-        VALUES (#{title}, #{premiereDate}, #{composer}, #{synopsis})
+<mapper namespace="com.tuture.model.dao.UserDao">
+    <insert id="insertUser"
+            parameterType="SignUpDto">
+        INSERT INTO musical (email, password, nickname, profile_image)
+        VALUES (#{email}, #{password}, #{nickname}, #{profileImg})
     </insert>
 
     <select id="selectMusical"
@@ -14,8 +14,8 @@
         SELECT * FROM musical
     </select>
 
-    <select id="seselectMusicalById" parameterType="long" resultType="MusicalDto">
-        SELECT * FROM musicals WHERE id = #{Id}
+    <select id="selectMusicalById" parameterType="long" resultType="MusicalDto">
+        SELECT * FROM musicals WHERE id = #{id}
     </select>
 
     <update id="updateMusical"
