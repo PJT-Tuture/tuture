@@ -6,4 +6,5 @@ import com.tuture.model.dto.SignUpDto;
 public interface UserDao {
     int insertUser(SignUpDto newUser);
     User selectUserByNickname(String nickname);
+    User selectUserByEmail(String email);
 }

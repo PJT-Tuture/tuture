@@ -13,8 +13,8 @@
         SELECT * FROM user WHERE nickname = #{nickname}
     </select>
 
-    <select id="selectMusicalById" parameterType="long" resultType="MusicalDto">
-        SELECT * FROM musicals WHERE id = #{id}
+    <select id="selectUserByEmail" parameterType="String" resultType="User">
+        SELECT * FROM user WHERE email = #{email}
     </select>
 
     <update id="updateMusical"

@@ -39,6 +39,11 @@ public class UserServiceImpl implements UserService{
         return ValidNicknameResponse.builder().status(200).msg("사용 가능한 닉네임입니다.").build();
     }
 
+    @Override
+    public boolean isUniqueEmail(String email) {
+        return userDao.selectUserByEmail(email) == null;
+    }
+
     private boolean isValidLengthNickname(String nickname){
         return nickname != null && nickname.length() >= 2 && nickname.length() <= 10;
     }
