@@ -1,7 +1,5 @@
 package com.tuture.global.exception;
 
-import com.tuture.global.exception.errorCode.ErrorCode;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

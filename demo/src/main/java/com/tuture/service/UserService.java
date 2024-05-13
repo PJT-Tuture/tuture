@@ -1,9 +1,10 @@
 package com.tuture.service;
 
 import com.tuture.model.dto.SignUpDto;
-import jakarta.validation.Valid;
+import com.tuture.model.dto.ValidNicknameResponse;
 
 public interface UserService {
-    int signupUser(@Valid SignUpDto request);
+    int signupUser(SignUpDto request);
+    ValidNicknameResponse isValidNickname(String nickname);
 
 }

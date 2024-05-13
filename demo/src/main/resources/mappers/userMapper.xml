@@ -5,13 +5,12 @@
 <mapper namespace="com.tuture.model.dao.UserDao">
     <insert id="insertUser"
             parameterType="SignUpDto">
-        INSERT INTO musical (email, password, nickname, profile_image)
+        INSERT INTO user (email, password, nickname, profile_image)
         VALUES (#{email}, #{password}, #{nickname}, #{profileImg})
     </insert>
 
-    <select id="selectMusical"
-            resultType="Musical">
-        SELECT * FROM musical
+    <select id="selectUserByNickname" parameterType="String" resultType="User">
+        SELECT * FROM user WHERE nickname = #{nickname}
     </select>
 
     <select id="selectMusicalById" parameterType="long" resultType="MusicalDto">
