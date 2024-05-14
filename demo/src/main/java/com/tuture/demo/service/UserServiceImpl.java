@@ -1,6 +1,7 @@
 package com.tuture.demo.service;
 
 import com.tuture.demo.model.dao.UserDao;
+import com.tuture.demo.model.domain.User;
 import com.tuture.demo.model.dto.SignUpDto;
 import com.tuture.demo.model.dto.ValidNicknameResponse;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +44,11 @@ public class UserServiceImpl implements UserService{
     @Override
     public boolean isUniqueEmail(String email) {
         return userDao.selectUserByEmail(email) == null;
+    }
+
+    @Override
+    public void removeUser(User user) {
+        userDao.deleteUser(user.getId());
     }
 
     private boolean isValidLengthNickname(String nickname){

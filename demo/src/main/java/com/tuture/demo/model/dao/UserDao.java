@@ -7,4 +7,5 @@ public interface UserDao {
     int insertUser(SignUpDto newUser);
     User selectUserByNickname(String nickname);
     User selectUserByEmail(String email);
+    int deleteUser(Long id);
 }
