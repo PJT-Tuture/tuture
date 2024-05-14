@@ -1,4 +1,4 @@
-package com.tuture.global.config;
+package com.tuture.demo.global.config;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Configuration;

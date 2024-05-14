@@ -1,9 +1,9 @@
-package com.tuture.controller;
+package com.tuture.demo.controller;
 
-import com.tuture.model.dto.SignUpDto;
-import com.tuture.model.dto.ValidNicknameResponse;
-import com.tuture.service.EmailAuthService;
-import com.tuture.service.UserService;
+import com.tuture.demo.model.dto.SignUpDto;
+import com.tuture.demo.model.dto.ValidNicknameResponse;
+import com.tuture.demo.service.EmailAuthService;
+import com.tuture.demo.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +38,7 @@ public class UserController {
 
     /**
      * 닉네임 사용가능 여부 확인
-     * @param nickname
+     * @param nickname 닉네임
      * @return status, message
      */
     @GetMapping("/verify-nickname/{nickname}")
@@ -54,7 +54,7 @@ public class UserController {
 
     /**
      * 이메일로 인증 코드 보내기
-     * @param email
+     * @param email 이메일
      * @return null
      */
     @GetMapping("/send-email/{email}")

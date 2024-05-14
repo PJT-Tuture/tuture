@@ -1,15 +1,16 @@
-package com.tuture.service;
+package com.tuture.demo.service;
 
-import com.tuture.model.dao.UserDao;
-import com.tuture.model.dto.SignUpDto;
-import com.tuture.model.dto.ValidNicknameResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.tuture.demo.model.dao.UserDao;
+import com.tuture.demo.model.dto.SignUpDto;
+import com.tuture.demo.model.dto.ValidNicknameResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
-    @Autowired
-    private UserDao userDao;
+
+    private final UserDao userDao;
 
     @Override
     public int signupUser(SignUpDto request) {

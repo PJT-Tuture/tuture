@@ -1,15 +1,14 @@
-package com.tuture.service;
+package com.tuture.demo.service;
 
-import com.tuture.model.dao.EmailAuthDao;
-import com.tuture.model.dto.EmailCodeDto;
-import com.tuture.model.dto.VerifyEmailCodeResponse;
+import com.tuture.demo.model.dao.EmailAuthDao;
+import com.tuture.demo.model.dto.EmailCodeDto;
+import com.tuture.demo.model.dto.VerifyEmailCodeResponse;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +21,7 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class EmailAuthService {
 
-    public EmailAuthDao emailAuthDao;
+    private final EmailAuthDao emailAuthDao;
 
     private static final char[] rndAllCharacters = new char[]{
             //number

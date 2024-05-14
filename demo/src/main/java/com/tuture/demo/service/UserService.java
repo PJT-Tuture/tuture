@@ -1,7 +1,7 @@
-package com.tuture.service;
+package com.tuture.demo.service;
 
-import com.tuture.model.dto.SignUpDto;
-import com.tuture.model.dto.ValidNicknameResponse;
+import com.tuture.demo.model.dto.SignUpDto;
+import com.tuture.demo.model.dto.ValidNicknameResponse;
 
 public interface UserService {
     int signupUser(SignUpDto request);

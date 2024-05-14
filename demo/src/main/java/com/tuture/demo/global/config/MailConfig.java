@@ -1,4 +1,4 @@
-package com.tuture.global.config;
+package com.tuture.demo.global.config;
 
 import java.util.Properties;
 import org.springframework.beans.factory.annotation.Value;

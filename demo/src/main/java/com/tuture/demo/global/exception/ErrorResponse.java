@@ -1,4 +1,4 @@
-package com.tuture.global.exception;
+package com.tuture.demo.global.exception;
 
 import lombok.Builder;
 import lombok.Getter;

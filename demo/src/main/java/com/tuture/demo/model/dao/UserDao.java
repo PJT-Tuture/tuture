@@ -1,7 +1,7 @@
-package com.tuture.model.dao;
+package com.tuture.demo.model.dao;
 
-import com.tuture.model.domain.User;
-import com.tuture.model.dto.SignUpDto;
+import com.tuture.demo.model.dto.SignUpDto;
+import com.tuture.demo.model.domain.User;
 
 public interface UserDao {
     int insertUser(SignUpDto newUser);

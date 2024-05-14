@@ -1,6 +1,6 @@
-package com.tuture.model.dao;
+package com.tuture.demo.model.dao;
 
-import com.tuture.model.dto.EmailCodeDto;
+import com.tuture.demo.model.dto.EmailCodeDto;
 
 public interface EmailAuthDao {
     void insertCode(EmailCodeDto newUser);
