@@ -1,4 +1,4 @@
-package com.tuture.model.domain;
+package com.tuture.demo.model.domain;
 
 public class User {
     long id;

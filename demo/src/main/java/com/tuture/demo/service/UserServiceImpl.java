@@ -1,15 +1,16 @@
-package com.tuture.service;
+package com.tuture.demo.service;
 
-import com.tuture.model.dao.UserDao;
-import com.tuture.model.dto.SignUpDto;
-import com.tuture.model.dto.ValidNicknameResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.tuture.demo.model.dao.UserDao;
+import com.tuture.demo.model.dto.SignUpDto;
+import com.tuture.demo.model.dto.ValidNicknameResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
-    @Autowired
-    private UserDao userDao;
+
+    private final UserDao userDao;
 
     @Override
     public int signupUser(SignUpDto request) {
@@ -37,6 +38,11 @@ public class UserServiceImpl implements UserService{
                     .build();
         }
         return ValidNicknameResponse.builder().status(200).msg("사용 가능한 닉네임입니다.").build();
+    }
+
+    @Override
+    public boolean isUniqueEmail(String email) {
+        return userDao.selectUserByEmail(email) == null;
     }
 
     private boolean isValidLengthNickname(String nickname){

@@ -1,4 +1,4 @@
-package com.tuture.model.dto;
+package com.tuture.demo.model.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Null;
