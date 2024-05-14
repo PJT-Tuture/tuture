@@ -1,5 +1,6 @@
 package com.tuture.demo.controller;
 
+import com.tuture.demo.model.domain.User;
 import com.tuture.demo.model.dto.SignUpDto;
 import com.tuture.demo.model.dto.ValidNicknameResponse;
 import com.tuture.demo.service.EmailAuthService;
@@ -89,6 +90,17 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+//    /**
+//     * 회원 탈퇴
+//     */
+//    @DeleteMapping("")
+//    public ResponseEntity<?> removeUser(@RequestParam(value = "p", required = true) String password) {
+//        // 로그인되어있는 상태의 유저의 아이디로 가져온 유저 정보의 비밀번호와 입력받은 비밀번호가 일치하면 삭제
+//        User user = userService.findUserById(id);
+//        userService.removeUser(user);
+//        return ResponseEntity.ok().build();
+//    }
 
 
 
