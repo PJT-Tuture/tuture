@@ -1,7 +1,7 @@
-package com.tuture.global.exception;
+package com.tuture.demo.global.exception;
 
-import com.tuture.global.exception.exceptionClasses.BoardException;
-import com.tuture.global.exception.exceptionClasses.UserException;
+import com.tuture.demo.global.exception.exceptionClasses.UserException;
+import com.tuture.demo.global.exception.exceptionClasses.BoardException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

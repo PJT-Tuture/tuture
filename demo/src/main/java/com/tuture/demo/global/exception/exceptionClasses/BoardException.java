@@ -1,6 +1,6 @@
-package com.tuture.global.exception.exceptionClasses;
+package com.tuture.demo.global.exception.exceptionClasses;
 
-import com.tuture.global.exception.ErrorCode;
+import com.tuture.demo.global.exception.ErrorCode;
 import lombok.Getter;
 
 @Getter

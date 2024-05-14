@@ -1,4 +1,4 @@
-package com.tuture.global.exception;
+package com.tuture.demo.global.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +12,7 @@ public enum ErrorCode {
     /* 400 BAD_REQUEST : 잘못된 요청 */
     FAILED_REGIST_BOARD(HttpStatus.BAD_REQUEST, "게시글 저장 실패"),
     INVALID_SEARCHCONDITION(HttpStatus.BAD_REQUEST, "잘못된 검색 조건"),
-    USER_NOT_LOGGED_IN(HttpStatus.FORBIDDEN, "로그인하지 않은 유저 접근 권한 없음"),
+    USER_NOT_LOGGED_IN(HttpStatus.UNAUTHORIZED, "로그인하지 않은 유저 접근 권한 없음"),
     INCORRECT_ID(HttpStatus.FORBIDDEN, "잘못된 유저 아이디"),
     KEYWORD_IS_EMPTY(HttpStatus.BAD_REQUEST, "키워드 값 없음");
 

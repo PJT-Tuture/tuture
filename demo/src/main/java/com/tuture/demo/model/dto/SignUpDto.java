@@ -1,4 +1,4 @@
-package com.tuture.model.dto;
+package com.tuture.demo.model.dto;
 
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -10,7 +10,6 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 public class SignUpDto {
 

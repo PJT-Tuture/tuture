@@ -1,4 +1,4 @@
-package com.tuture.model.dto;
+package com.tuture.demo.model.dto;
 
 public class TagDto {
     private Long tagId;

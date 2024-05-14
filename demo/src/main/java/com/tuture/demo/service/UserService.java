@@ -1,4 +1,4 @@
-package com.tuture.service;
+package com.tuture.demo.service;
 
 import org.springframework.stereotype.Service;
 
