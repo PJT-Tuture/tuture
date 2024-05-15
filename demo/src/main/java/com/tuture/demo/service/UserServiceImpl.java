@@ -1,11 +1,14 @@
 package com.tuture.demo.service;
 
+import com.tuture.demo.global.exception.exceptionClasses.UserException;
 import com.tuture.demo.model.dao.UserDao;
 import com.tuture.demo.model.domain.User;
 import com.tuture.demo.model.dto.SignUpDto;
 import com.tuture.demo.model.dto.ValidNicknameResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import static com.tuture.demo.global.exception.ErrorCode.USER_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -47,8 +50,17 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void removeUser(User user) {
-        userDao.deleteUser(user.getId());
+    public int removeUser(User user) {
+        return userDao.deleteUserById(user.getId());
+    }
+
+    @Override
+    public User findUserById(Long id) {
+        User user = userDao.selectUserById(id);
+        if (user == null) {
+            throw new UserException(USER_NOT_FOUND);
+        }
+        return user;
     }
 
     private boolean isValidLengthNickname(String nickname){

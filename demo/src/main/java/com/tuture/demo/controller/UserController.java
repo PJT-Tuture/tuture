@@ -1,5 +1,7 @@
 package com.tuture.demo.controller;
 
+import com.tuture.demo.global.exception.ErrorCode;
+import com.tuture.demo.global.exception.exceptionClasses.UserException;
 import com.tuture.demo.model.domain.User;
 import com.tuture.demo.model.dto.SignUpDto;
 import com.tuture.demo.model.dto.ValidNicknameResponse;
@@ -10,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -91,16 +94,20 @@ public class UserController {
         }
     }
 
-//    /**
-//     * 회원 탈퇴
-//     */
-//    @DeleteMapping("")
-//    public ResponseEntity<?> removeUser(@RequestParam(value = "p", required = true) String password) {
-//        // 로그인되어있는 상태의 유저의 아이디로 가져온 유저 정보의 비밀번호와 입력받은 비밀번호가 일치하면 삭제
-//        User user = userService.findUserById(id);
-//        userService.removeUser(user);
-//        return ResponseEntity.ok().build();
-//    }
+    /**
+     * 회원 탈퇴
+     * User loginUser => JWT에서 사용자 정보 가져오기
+     */
+    @DeleteMapping("")
+    public ResponseEntity<?> removeUser(@AuthenticationPrincipal User loginUser,
+                                        @RequestParam(value = "p") String password) {
+        // 로그인되어있는 상태의 유저의 아이디로 가져온 유저 정보의 비밀번호와 입력받은 비밀번호가 일치하면 삭제
+        User user = userService.findUserById(loginUser.getId());
+        if (!user.getPassword().equals(password)) {
+            throw new UserException(ErrorCode.INVALID_PASSWORD);
+        }
+        return new ResponseEntity<>(userService.removeUser(user) == 1 ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
+    }
 
 
 

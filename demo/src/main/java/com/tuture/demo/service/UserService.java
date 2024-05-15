@@ -8,5 +8,6 @@ public interface UserService {
     int signupUser(SignUpDto request);
     ValidNicknameResponse isValidNickname(String nickname);
     boolean isUniqueEmail(String email);
-    void removeUser(User user);
+    int removeUser(User user);
+    User findUserById(Long id);
 }
