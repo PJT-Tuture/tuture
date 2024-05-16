@@ -85,5 +85,4 @@ public class BoardController {
         List<Board> boardList = boardService.search(page, condition);
         return ResponseEntity.ok(boardList);
     }
-
 }

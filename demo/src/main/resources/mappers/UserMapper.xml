@@ -2,21 +2,29 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.tuture.model.dao.UserDao">
+<mapper namespace="com.tuture.demo.model.dao.UserDao">
     <insert id="insertUser"
             parameterType="SignUpDto">
-        INSERT INTO musical (email, password, nickname, profile_image)
+        INSERT INTO user (email, password, nickname, profile_image)
         VALUES (#{email}, #{password}, #{nickname}, #{profileImg})
     </insert>
 
-    <select id="selectMusical"
-            resultType="Musical">
-        SELECT * FROM musical
+    <select id="selectUserById" parameterType="long" resultType="User">
+        SELECT * FROM user WHERE id = #{id}
     </select>
 
-    <select id="selectMusicalById" parameterType="long" resultType="MusicalDto">
-        SELECT * FROM musicals WHERE id = #{id}
+    <select id="selectUserByNickname" parameterType="String" resultType="User">
+        SELECT * FROM user WHERE nickname = #{nickname}
     </select>
+
+    <select id="selectUserByEmail" parameterType="String" resultType="User">
+        SELECT * FROM user WHERE email = #{email}
+    </select>
+
+    <delete id="deleteUserById" parameterType="long">
+        DELETE user
+        WHERE id = #{id}
+    </delete>
 
     <update id="updateMusical"
             parameterType="Musical">
@@ -24,11 +32,6 @@
         title = #{title}, composer = #{composer}, premiere_date = #{premiereDate}, synopsis = #{synopsis}
         WHERE id = #{id}
     </update>
-
-    <delete id="deleteMusical" parameterType="long">
-        DELETE musicals
-        WHERE id = #{id}
-    </delete>
 
     <select id="searchMusicals" parameterType="String"
             resultType="Musical">

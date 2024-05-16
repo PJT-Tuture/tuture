@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tuture.demo.model.dao.EmailAuthDao">
+    <insert id="insertCode" parameterType="EmailCodeDto">
+        INSERT INTO emailauth (email, code, expiration_date)
+        VALUES (#{email}, #{code}, #{expiration_date})
+    </insert>
+    <select id="selectByEmail" parameterType="String">
+        SELECT * FROM emailauth WHERE email = #{email}
+    </select>
+</mapper>
