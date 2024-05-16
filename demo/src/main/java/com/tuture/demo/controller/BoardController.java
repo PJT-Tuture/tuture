@@ -1,6 +1,6 @@
 package com.tuture.demo.controller;
 
-import com.tuture.demo.model.dto.Board;
+import com.tuture.demo.model.domain.Board;
 import com.tuture.demo.model.dto.AddBoardDto;
 import com.tuture.demo.model.dto.SearchCondition;
 import com.tuture.demo.service.BoardService;

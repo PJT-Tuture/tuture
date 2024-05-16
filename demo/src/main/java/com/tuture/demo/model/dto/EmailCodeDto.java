@@ -7,9 +7,9 @@ import java.time.format.DateTimeFormatter;
 
 @Getter
 public class EmailCodeDto {
-    String email;
-    String code;
-    String expirationDate;
+    private String email;
+    private String code;
+    private String expirationDate;
 
     public EmailCodeDto(String email, String code) {
         this.email = email;

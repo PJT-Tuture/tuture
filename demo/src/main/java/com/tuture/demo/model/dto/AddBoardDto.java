@@ -2,6 +2,7 @@ package com.tuture.demo.model.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.tuture.demo.model.domain.Board;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Getter;

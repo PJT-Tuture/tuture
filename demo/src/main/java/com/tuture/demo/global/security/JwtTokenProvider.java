@@ -1,6 +1,7 @@
 package com.tuture.demo.global.security;
 
 import io.jsonwebtoken.*;
+import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,8 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;

@@ -1,7 +1,7 @@
 package com.tuture.demo.service;
 
 
-import com.tuture.demo.model.dto.Board;
+import com.tuture.demo.model.domain.Board;
 import com.tuture.demo.model.dto.AddBoardDto;
 import com.tuture.demo.model.dto.SearchCondition;
 import org.springframework.stereotype.Service;

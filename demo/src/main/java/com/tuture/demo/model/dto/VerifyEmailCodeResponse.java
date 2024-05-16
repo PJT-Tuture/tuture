@@ -6,6 +6,6 @@ import lombok.Getter;
 @Getter
 @Builder
 public class VerifyEmailCodeResponse {
-    int status;
-    String msg;
+    private int status;
+    private String msg;
 }

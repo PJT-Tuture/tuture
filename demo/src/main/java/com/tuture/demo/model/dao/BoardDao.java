@@ -1,6 +1,6 @@
 package com.tuture.demo.model.dao;
 
-import com.tuture.demo.model.dto.Board;
+import com.tuture.demo.model.domain.Board;
 import com.tuture.demo.model.dto.SearchCondition;
 
 import java.util.List;

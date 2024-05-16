@@ -10,6 +10,6 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 public class ValidNicknameResponse {
-    int status;
-    String msg;
+    private int status;
+    private String msg;
 }

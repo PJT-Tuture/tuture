@@ -1,11 +1,8 @@
-package com.tuture.demo.model.dto;
+package com.tuture.demo.model.domain;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 
 @Builder
