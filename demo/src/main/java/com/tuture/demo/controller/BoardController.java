@@ -1,6 +1,5 @@
 package com.tuture.demo.controller;
 
-
 import com.tuture.demo.model.dto.Board;
 import com.tuture.demo.model.dto.AddBoardDto;
 import com.tuture.demo.model.dto.SearchCondition;
@@ -31,7 +30,7 @@ public class BoardController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Board> getBoardById(@Valid @PathVariable Long id){
+    public ResponseEntity<Board> getBoardDetail(@Valid @PathVariable Long id){
         Board board = boardService.findBoardById(id);
         return ResponseEntity.ok(board);
     }
@@ -87,9 +86,4 @@ public class BoardController {
         return ResponseEntity.ok(boardList);
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<?> test(@RequestParam(value = "test") String msg) {
-        System.out.println("test");
-        return ResponseEntity.ok(msg);
-    }
 }
