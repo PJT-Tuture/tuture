@@ -9,6 +9,10 @@
         VALUES (#{email}, #{password}, #{nickname}, #{profileImg})
     </insert>
 
+    <select id="selectUserById" parameterType="long" resultType="User">
+        SELECT * FROM user WHERE id = #{id}
+    </select>
+
     <select id="selectUserByNickname" parameterType="String" resultType="User">
         SELECT * FROM user WHERE nickname = #{nickname}
     </select>
@@ -17,17 +21,17 @@
         SELECT * FROM user WHERE email = #{email}
     </select>
 
+    <delete id="deleteUserById" parameterType="long">
+        DELETE user
+        WHERE id = #{id}
+    </delete>
+
     <update id="updateMusical"
             parameterType="Musical">
         UPDATE SET musicals
         title = #{title}, composer = #{composer}, premiere_date = #{premiereDate}, synopsis = #{synopsis}
         WHERE id = #{id}
     </update>
-
-    <delete id="deleteMusical" parameterType="long">
-        DELETE musicals
-        WHERE id = #{id}
-    </delete>
 
     <select id="searchMusicals" parameterType="String"
             resultType="Musical">
