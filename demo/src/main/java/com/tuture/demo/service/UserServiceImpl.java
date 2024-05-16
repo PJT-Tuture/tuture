@@ -1,3 +1,4 @@
+
 package com.tuture.demo.service;
 
 import com.tuture.demo.global.exception.exceptionClasses.UserException;
@@ -74,5 +75,6 @@ public class UserServiceImpl implements UserService{
     private boolean isUniqueNickname(String nickname){
         return userDao.selectUserByNickname(nickname) == null;
     }
+
 
 }

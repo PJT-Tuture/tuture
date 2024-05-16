@@ -10,3 +10,4 @@ public interface UserDao {
     User selectUserByEmail(String email);
     int deleteUserById(Long id);  // 성공 시 1, 실패시 0 반환
 }
+

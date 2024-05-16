@@ -1,5 +1,6 @@
 package com.tuture.demo.global.exception;
 
+
 import com.tuture.demo.global.exception.exceptionClasses.BoardException;
 import com.tuture.demo.global.exception.exceptionClasses.UserException;
 import lombok.extern.slf4j.Slf4j;

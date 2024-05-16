@@ -31,6 +31,7 @@ public class UserController {
     @PostMapping("/signup/general")
     public ResponseEntity<?> generalSignUp(@Valid @RequestBody SignUpDto request) {
         log.debug("[sign-up/general] 회원가입 진행. userEmail : {} ", request.getEmail());
+
         try {
             int result = userService.signupUser(request);
             return new ResponseEntity<>(result, HttpStatus.OK);

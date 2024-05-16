@@ -10,4 +10,5 @@ public interface UserService {
     boolean isUniqueEmail(String email);
     int removeUser(User user);
     User findUserById(Long id);
+
 }
