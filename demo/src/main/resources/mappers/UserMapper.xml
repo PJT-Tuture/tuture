@@ -26,10 +26,10 @@
         WHERE id = #{id}
     </delete>
 
-    <update id="updateMusical"
-            parameterType="Musical">
-        UPDATE SET musicals
-        title = #{title}, composer = #{composer}, premiere_date = #{premiereDate}, synopsis = #{synopsis}
+    <update id="updateUser"
+            parameterType="User">
+        UPDATE user
+        SET nickname = #{nickname}, password = #{password}, profile_image = #{profileImg}
         WHERE id = #{id}
     </update>
 
