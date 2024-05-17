@@ -9,6 +9,6 @@ public interface UserService {
     ValidNicknameResponse isValidNickname(String nickname);
     boolean isUniqueEmail(String email);
     int removeUser(User user);
-    User findUserById(Long id);
+    User findUserById(long id);
 
 }
