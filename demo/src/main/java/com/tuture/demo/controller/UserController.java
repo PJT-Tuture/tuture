@@ -3,7 +3,6 @@ package com.tuture.demo.controller;
 import com.tuture.demo.global.exception.ErrorCode;
 import com.tuture.demo.global.exception.exceptionClasses.SigninException;
 import com.tuture.demo.global.exception.exceptionClasses.UserException;
-import com.tuture.demo.global.security.JwtTokenProvider;
 import com.tuture.demo.model.domain.User;
 import com.tuture.demo.model.dto.SignInDto;
 import com.tuture.demo.model.dto.SignUpDto;
@@ -88,8 +87,7 @@ public class UserController {
     }
 
     /**
-     * 입력받은 이메일 인증 코드 확인
-     */
+     * 입력받은 이메일 인증 코드 확인 */
     @GetMapping("/verify-email")
     public ResponseEntity<?> verifyEmailCode(@RequestParam String email, @RequestParam String code) {
         log.debug("[verifyEmail] 이메일 인증 코드 검증 진행. userEmail : {} ", email);
@@ -116,9 +114,7 @@ public class UserController {
         return new ResponseEntity<>(userService.removeUser(user) == 1 ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
 
-    /**
-     * 일반 로그인
-     */
+    /** 일반 로그인 */
     @PostMapping("/signin/general")
     public ResponseEntity<?> generalSignIn(@RequestBody SignInDto.Request request) {
         // 1. 해당 이메일로 가져온 회원.
@@ -130,6 +126,12 @@ public class UserController {
         }
 
         return ResponseEntity.ok(userService.signIn(user));
+    }
+
+    /** 회원 상세 조회 */
+    @GetMapping("")
+    public ResponseEntity<?> getUserDetail(@AuthenticationPrincipal User loginUser) {
+        return ResponseEntity.ok(loginUser);
     }
 
 
