@@ -1,8 +1,11 @@
 package com.tuture.demo.controller;
 
 import com.tuture.demo.global.exception.ErrorCode;
+import com.tuture.demo.global.exception.exceptionClasses.SigninException;
 import com.tuture.demo.global.exception.exceptionClasses.UserException;
+import com.tuture.demo.global.security.JwtTokenProvider;
 import com.tuture.demo.model.domain.User;
+import com.tuture.demo.model.dto.SignInDto;
 import com.tuture.demo.model.dto.SignUpDto;
 import com.tuture.demo.model.dto.ValidNicknameResponse;
 import com.tuture.demo.service.EmailAuthService;
@@ -26,6 +29,7 @@ public class UserController {
 
     /**
      * 회원 가입
+     *
      * @return 1: 성공, 0: 실패
      */
     @PostMapping("/signup/general")
@@ -43,6 +47,7 @@ public class UserController {
 
     /**
      * 닉네임 사용가능 여부 확인
+     *
      * @param nickname 닉네임
      * @return status, message
      */
@@ -59,6 +64,7 @@ public class UserController {
 
     /**
      * 이메일로 인증 코드 보내기
+     *
      * @param email 이메일
      * @return null
      */
@@ -110,8 +116,21 @@ public class UserController {
         return new ResponseEntity<>(userService.removeUser(user) == 1 ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * 일반 로그인
+     */
+    @PostMapping("/signin/general")
+    public ResponseEntity<?> generalSignIn(@RequestBody SignInDto.Request request) {
+        // 1. 해당 이메일로 가져온 회원.
+        User user = userService.findUserByEmail(request.getEmail());
 
+        // password가 입력받은 password와 일치하지 않으면 예외
+        if (!user.getPassword().equals(request.getPassword())) {
+            throw new SigninException(ErrorCode.USER_NOT_FOUND);
+        }
 
+        return ResponseEntity.ok(userService.signIn(user));
+    }
 
 
 }
