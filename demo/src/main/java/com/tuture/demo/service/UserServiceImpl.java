@@ -96,6 +96,15 @@ public class UserServiceImpl implements UserService{
                 .access_token(accessToken).build();
     }
 
+    @Override
+    public User modifyUser(User user) {
+        int result = userDao.updateUser(user);
+        if (result == 0) {
+            throw new RuntimeException("유저 정보 수정 실패");
+        }
+        return user;
+    }
+
     private boolean isValidLengthNickname(String nickname){
         return nickname != null && nickname.length() >= 2 && nickname.length() <= 10;
     }

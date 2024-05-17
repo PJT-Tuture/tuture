@@ -13,4 +13,5 @@ public interface UserService {
     User findUserById(long id);
     User findUserByEmail(String email);
     SignInDto.Response signIn(User user);
+    User modifyUser(User user);
 }

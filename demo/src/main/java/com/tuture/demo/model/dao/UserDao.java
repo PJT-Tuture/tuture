@@ -9,5 +9,6 @@ public interface UserDao {
     User selectUserByNickname(String nickname);
     User selectUserByEmail(String email);
     int deleteUserById(long id);  // 성공 시 1, 실패시 0 반환
+    int updateUser(User user);
 }
 
