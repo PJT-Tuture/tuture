@@ -4,10 +4,7 @@ import com.tuture.demo.global.exception.ErrorCode;
 import com.tuture.demo.global.exception.exceptionClasses.SigninException;
 import com.tuture.demo.global.exception.exceptionClasses.UserException;
 import com.tuture.demo.model.domain.User;
-import com.tuture.demo.model.dto.SignInDto;
-import com.tuture.demo.model.dto.SignUpDto;
-import com.tuture.demo.model.dto.UpdateUserBasicDTO;
-import com.tuture.demo.model.dto.ValidNicknameResponse;
+import com.tuture.demo.model.dto.*;
 import com.tuture.demo.service.EmailAuthService;
 import com.tuture.demo.service.UserService;
 import jakarta.validation.Valid;
@@ -153,6 +150,17 @@ public class UserController {
             e.printStackTrace();
             return new ResponseEntity<>("유저 정보 수정 실패", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PutMapping("/password")
+    public ResponseEntity<?> modifyUserPassword(@AuthenticationPrincipal User loginUser,
+                                                @RequestBody UpdatePasswordDto request) {
+        if (!loginUser.getPassword().equals(request.getCurPassword())) {
+            throw new UserException(ErrorCode.INCORREXT_PASSWORD);
+        }
+        loginUser.setPassword(request.getNewPassword());
+        userService.modifyUser(loginUser);
+        return ResponseEntity.ok().build();
     }
 }
 
