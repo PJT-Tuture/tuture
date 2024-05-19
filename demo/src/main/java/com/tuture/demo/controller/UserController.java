@@ -129,7 +129,9 @@ public class UserController {
         return ResponseEntity.ok(userService.signIn(user));
     }
 
-    /** 회원 상세 조회 */
+    /**
+     * 회원 상세 조회
+     */
     @GetMapping("")
     public ResponseEntity<User> getUserDetail(@AuthenticationPrincipal User loginUser) {
         return ResponseEntity.ok(loginUser);
@@ -161,6 +163,19 @@ public class UserController {
         loginUser.setPassword(request.getNewPassword());
         userService.modifyUser(loginUser);
         return ResponseEntity.ok().build();
+    }
+
+    /**
+     * 내가 작성한 글 불러오기
+     *
+     * @param loginUser 현재 로그인한 유저
+     * @param page      페이지네이션을 위한 현재 페이지 값. default: 0
+     * @return 10개의 게시글
+     */
+    @GetMapping("/myboard")
+    public ResponseEntity<?> getMyBoardList(@AuthenticationPrincipal User loginUser,
+                                            @RequestParam(value = "page", defaultValue = "1") int page) {
+        return ResponseEntity.ok(userService.getMyBoardList(loginUser.getId(), page));
     }
 }
 
