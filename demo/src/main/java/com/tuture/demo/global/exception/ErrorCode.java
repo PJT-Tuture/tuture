@@ -15,6 +15,7 @@ public enum ErrorCode {
     INVALID_SEARCHCONDITION(HttpStatus.BAD_REQUEST, "잘못된 검색 조건"),
     USER_NOT_LOGGED_IN(HttpStatus.UNAUTHORIZED, "로그인하지 않은 유저 접근 권한 없음"),
     INCORRECT_ID(HttpStatus.FORBIDDEN, "잘못된 유저 아이디"),
+    INCORREXT_PASSWORD(HttpStatus.BAD_REQUEST, "잘못된 비밀번호"),
     KEYWORD_IS_EMPTY(HttpStatus.BAD_REQUEST, "키워드 값 없음"),
 
     DUPLICATED_NICKNAME(HttpStatus.BAD_REQUEST, "중복된 이메일입니다"),

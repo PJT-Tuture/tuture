@@ -4,10 +4,7 @@ import com.tuture.demo.global.exception.ErrorCode;
 import com.tuture.demo.global.exception.exceptionClasses.SigninException;
 import com.tuture.demo.global.exception.exceptionClasses.UserException;
 import com.tuture.demo.model.domain.User;
-import com.tuture.demo.model.dto.SignInDto;
-import com.tuture.demo.model.dto.SignUpDto;
-import com.tuture.demo.model.dto.UpdateUserBasicDTO;
-import com.tuture.demo.model.dto.ValidNicknameResponse;
+import com.tuture.demo.model.dto.*;
 import com.tuture.demo.service.EmailAuthService;
 import com.tuture.demo.service.UserService;
 import jakarta.validation.Valid;
@@ -132,7 +129,9 @@ public class UserController {
         return ResponseEntity.ok(userService.signIn(user));
     }
 
-    /** 회원 상세 조회 */
+    /**
+     * 회원 상세 조회
+     */
     @GetMapping("")
     public ResponseEntity<User> getUserDetail(@AuthenticationPrincipal User loginUser) {
         return ResponseEntity.ok(loginUser);
@@ -153,6 +152,30 @@ public class UserController {
             e.printStackTrace();
             return new ResponseEntity<>("유저 정보 수정 실패", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PutMapping("/password")
+    public ResponseEntity<?> modifyUserPassword(@AuthenticationPrincipal User loginUser,
+                                                @RequestBody UpdatePasswordDto request) {
+        if (!loginUser.getPassword().equals(request.getCurPassword())) {
+            throw new UserException(ErrorCode.INCORREXT_PASSWORD);
+        }
+        loginUser.setPassword(request.getNewPassword());
+        userService.modifyUser(loginUser);
+        return ResponseEntity.ok().build();
+    }
+
+    /**
+     * 내가 작성한 글 불러오기
+     *
+     * @param loginUser 현재 로그인한 유저
+     * @param page      페이지네이션을 위한 현재 페이지 값. default: 0
+     * @return 10개의 게시글
+     */
+    @GetMapping("/myboard")
+    public ResponseEntity<?> getMyBoardList(@AuthenticationPrincipal User loginUser,
+                                            @RequestParam(value = "page", defaultValue = "1") int page) {
+        return ResponseEntity.ok(userService.getMyBoardList(loginUser.getId(), page));
     }
 }
 
