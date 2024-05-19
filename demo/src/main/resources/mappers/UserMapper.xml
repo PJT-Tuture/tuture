@@ -38,4 +38,19 @@
         SELECT * FROM musical
         WHERE ${keyword} LOVE concat('%',#{value},'%')
     </select>
+
+    <!-- 페이징된 게시글 목록을 가져오는 쿼리 -->
+    <select id="selectMyBoardList" parameterType="map" resultType="User">
+        SELECT *
+        FROM board
+        WHERE writer_id = #{id}
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <!-- 총 게시글 수를 가져오는 쿼리 -->
+    <select id="countMyBoardList" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM board
+        WHERE writer_id = #{id}
+    </select>
 </mapper>

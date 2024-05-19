@@ -5,7 +5,9 @@ import com.tuture.demo.global.exception.exceptionClasses.SigninException;
 import com.tuture.demo.global.exception.exceptionClasses.UserException;
 import com.tuture.demo.global.security.JwtTokenProvider;
 import com.tuture.demo.model.dao.UserDao;
+import com.tuture.demo.model.domain.Board;
 import com.tuture.demo.model.domain.User;
+import com.tuture.demo.model.dto.BoardListResponse;
 import com.tuture.demo.model.dto.SignInDto;
 import com.tuture.demo.model.dto.SignUpDto;
 import com.tuture.demo.model.dto.ValidNicknameResponse;
@@ -103,6 +105,18 @@ public class UserServiceImpl implements UserService{
             throw new RuntimeException("유저 정보 수정 실패");
         }
         return user;
+    }
+
+    @Override
+    public BoardListResponse getMyBoardList(long id, int page) {
+        int limit = 10; // 페이지당 10개의 게시글
+        int offset = (page - 1) * limit; // 페이지가 1부터 시작한다고 가정
+
+        List<Board> boards = userDao.selectMyBoardList(id, offset, limit);
+        int totalCnt = userDao.countMyBoardList(id);
+
+        return BoardListResponse.builder()
+                .boards(boards).totalCnt(totalCnt).build();
     }
 
     private boolean isValidLengthNickname(String nickname){
