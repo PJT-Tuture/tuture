@@ -4,7 +4,6 @@ import com.tuture.demo.model.domain.Board;
 import com.tuture.demo.model.domain.User;
 import com.tuture.demo.model.dto.AddBoardDto;
 import com.tuture.demo.model.dto.BoardDetailDto;
-import com.tuture.demo.model.dto.LanguageTagDto;
 import com.tuture.demo.model.dto.SearchCondition;
 import com.tuture.demo.service.BoardService;
 import jakarta.validation.Valid;
