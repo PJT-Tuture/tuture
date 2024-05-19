@@ -3,6 +3,8 @@ package com.tuture.demo.service;
 
 import com.tuture.demo.model.domain.Board;
 import com.tuture.demo.model.dto.AddBoardDto;
+import com.tuture.demo.model.dto.BoardDetailDto;
+import com.tuture.demo.model.dto.LanguageTagDto;
 import com.tuture.demo.model.dto.SearchCondition;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,8 @@ public interface BoardService {
 
     Board findBoardById(Long id);
 
+    BoardDetailDto.Response getBoardDetail(Long boardId, Long loggedInUserId);
+
     int addBoard(AddBoardDto.Request request);
 
     int removeBoard(Long id);
@@ -22,4 +26,6 @@ public interface BoardService {
     int modifyBoard(Board board);
 
     List<Board> search(int page, SearchCondition condition);
+
+    List<Board> getBoardsByTagIds(List<Long> tagIds);
 }

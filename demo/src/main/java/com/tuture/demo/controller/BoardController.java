@@ -1,7 +1,10 @@
 package com.tuture.demo.controller;
 
 import com.tuture.demo.model.domain.Board;
+import com.tuture.demo.model.domain.User;
 import com.tuture.demo.model.dto.AddBoardDto;
+import com.tuture.demo.model.dto.BoardDetailDto;
+import com.tuture.demo.model.dto.LanguageTagDto;
 import com.tuture.demo.model.dto.SearchCondition;
 import com.tuture.demo.service.BoardService;
 import jakarta.validation.Valid;
@@ -9,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,9 +34,10 @@ public class BoardController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Board> getBoardDetail(@Valid @PathVariable Long id){
-        Board board = boardService.findBoardById(id);
-        return ResponseEntity.ok(board);
+    public ResponseEntity<BoardDetailDto.Response> getBoardDetail(@Valid @PathVariable Long id, @AuthenticationPrincipal User loginUser){
+        Long userId = loginUser.getId();
+        BoardDetailDto.Response boardDetail = boardService.getBoardDetail(id, userId);
+        return ResponseEntity.ok(boardDetail);
     }
     /**
      * 게시글 추가
@@ -77,6 +82,12 @@ public class BoardController {
 //        } catch (Exception e) {
 //            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 //        }
+    }
+
+    @GetMapping("/tags")
+    public ResponseEntity<List<Board>> getBoardsByTagIds(@Valid @RequestParam List<Long> tagIds) {
+        List<Board> boards = boardService.getBoardsByTagIds(tagIds);
+        return ResponseEntity.ok(boards);
     }
 
     @GetMapping("/search")

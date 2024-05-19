@@ -34,7 +34,7 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) -> authorize
-                        .anyRequest().authenticated())
+                        .anyRequest().permitAll())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
 //        // HTTP 요청 권한 설정 예시
@@ -47,7 +47,7 @@ public class SecurityConfig {
 //                .httpBasic(AbstractHttpConfigurer::disable)
 //                .formLogin(AbstractHttpConfigurer::disable)
 //                .authorizeHttpRequests((authorize) -> authorize
-//                        .requestMatchers("/signup", "/", "/login").permitAll()
+//                        .requestMatchers("/user/signup/**", "/user/signin/**", "/user/send-email/**", "/user/verify-email","/board/**").permitAll()
 //                        .anyRequest().authenticated())
 //                .sessionManagement(session -> session
 //                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
