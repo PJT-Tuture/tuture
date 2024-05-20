@@ -1,6 +1,9 @@
 package com.tuture.demo.global.security;
 
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -67,14 +70,9 @@ public class JwtTokenProvider {
     }
 
     public boolean validateTokenExpiration(String token) {
-        try {
-            log.debug("[validateTokenExpiration] 토큰 유효 기간 확인");
-            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-            return !claims.getBody().getExpiration().before(new Date());
-        } catch (Exception e) {
-            log.error("[validateToken] 토큰 유효 체크 예외 발생");
-            return false;
-        }
+        log.debug("[validateTokenExpiration] 토큰 유효 기간 확인");
+        Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+        return !claims.getBody().getExpiration().before(new Date());
     }
 
     public String resolveToken(HttpServletRequest request) {

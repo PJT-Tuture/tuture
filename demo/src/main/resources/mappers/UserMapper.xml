@@ -33,12 +33,6 @@
         WHERE id = #{id}
     </update>
 
-    <select id="searchMusicals" parameterType="String"
-            resultType="Musical">
-        SELECT * FROM musical
-        WHERE ${keyword} LOVE concat('%',#{value},'%')
-    </select>
-
     <!-- 페이징된 게시글 목록을 가져오는 쿼리 -->
     <select id="selectMyBoardList" parameterType="map" resultType="User">
         SELECT *
