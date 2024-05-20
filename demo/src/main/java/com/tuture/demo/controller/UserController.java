@@ -134,6 +134,7 @@ public class UserController {
      */
     @GetMapping("")
     public ResponseEntity<User> getUserDetail(@AuthenticationPrincipal User loginUser) {
+        System.out.println(loginUser.getId());
         return ResponseEntity.ok(loginUser);
     }
 

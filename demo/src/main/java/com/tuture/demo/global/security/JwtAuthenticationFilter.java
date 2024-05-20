@@ -28,7 +28,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String accessToken = jwtTokenProvider.resolveToken(request);
 
         // 제대로 됐을 때
-        if (accessToken != null & jwtTokenProvider.validateTokenExpiration(accessToken)) {
+        if (accessToken != null && jwtTokenProvider.validateTokenExpiration(accessToken)) {
             log.debug("[doFilterInternal] 토큰 유효 검증 성공");
 
             response.setHeader("X-AUTH-TOKEN", accessToken);
