@@ -34,6 +34,7 @@ public class BoardDocument {
     private String dueDate;
     private String roleCategory;
     private String imgUrl;
+    private List<Long> tagIds;
     public static BoardDocument createBoardDocument(Board board, List<Long> tagIds) {
         return BoardDocument.builder()
                 .id(board.getId())
@@ -43,6 +44,7 @@ public class BoardDocument {
                 .imgUrl(board.getImgUrl())
                 .dueDate(board.getDueDate())
                 .regDate(board.getRegDate())
+                .tagIds(tagIds)
                 .build();
     }
 
@@ -52,6 +54,7 @@ public class BoardDocument {
         this.imgUrl = board.getImgUrl();
         this.dueDate = board.getDueDate();
         this.regDate = board.getRegDate();
+        this.tagIds = tagIds;
         return this;
     }
 }

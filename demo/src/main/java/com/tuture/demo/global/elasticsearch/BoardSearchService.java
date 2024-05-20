@@ -1,7 +1,6 @@
 package com.tuture.demo.global.elasticsearch;
 
 import com.tuture.demo.model.domain.Board;
-import com.tuture.demo.model.dto.SearchCondition;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.index.query.BoolQueryBuilder;
