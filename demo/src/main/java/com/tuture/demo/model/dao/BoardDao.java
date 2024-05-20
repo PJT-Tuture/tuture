@@ -14,7 +14,6 @@ public interface BoardDao {
 
     int updateBoard(Board board);
     int deleteBoard(Long id);
-    List<Board> search(int page, SearchCondition condition);
 
     List<Board> getBoardsByTagIds(List<Long> tagIds);
 }

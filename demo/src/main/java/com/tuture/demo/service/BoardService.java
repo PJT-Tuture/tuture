@@ -24,7 +24,5 @@ public interface BoardService {
 
     int modifyBoard(Board board);
 
-    List<Board> search(int page, SearchCondition condition);
-
     List<Board> getBoardsByTagIds(List<Long> tagIds);
 }

@@ -60,10 +60,6 @@ public class BoardServiceImpl implements BoardService{
         return boardDao.deleteBoard(id);
     }
 
-    @Override
-    public List<Board> search(int page, SearchCondition condition) {
-        return boardDao.search(page, condition);
-    }
 
     @Override
     public List<Board> getBoardsByTagIds(List<Long> tagIds){
