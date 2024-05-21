@@ -6,7 +6,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BoardTagDto {
+public class BoardLanguageDto {
+    private Long id;
     private Long boardId;
     private Long tagId;
 }

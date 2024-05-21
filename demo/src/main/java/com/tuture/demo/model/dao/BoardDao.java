@@ -1,7 +1,6 @@
 package com.tuture.demo.model.dao;
 
 import com.tuture.demo.model.domain.Board;
-import com.tuture.demo.model.dto.SearchCondition;
 
 import java.util.List;
 
@@ -14,5 +13,6 @@ public interface BoardDao {
 
     int updateBoard(Board board);
     int deleteBoard(Long id);
-    List<Board> search(int page, SearchCondition condition);
+
+    List<Board> getBoardsByTagIds(List<Long> tagIds);
 }

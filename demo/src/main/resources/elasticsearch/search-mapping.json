@@ -11,24 +11,28 @@
       "type": "text",
       "analyzer": "nori"
     },
-    "writer": {
+    "writerNickname": {
       "type": "text",
       "analyzer": "nori"
     },
-    "imageUrl": {
+    "imgUrl": {
       "type": "text"
     },
-    "voteCount": {
+    "viewCnt": {
       "type": "integer"
     },
-    "chatCount": {
-      "type": "integer"
+    "dueDate": {
+      "type": "date",
+      "format": "yyyy-MM-dd"
     },
-    "endAt": {
+    "region": {
+      "type": "text"
+    },
+    "regDate": {
       "type": "date"
     },
-    "createdAt": {
-      "type": "date"
+    "roleCategory": {
+      "type": "keyword"
     },
     "tags": {
       "type": "keyword"
