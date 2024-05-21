@@ -45,7 +45,8 @@ public class EmailAuthService {
         try {
             javaMailSender.send(message); // 메일 발송
         } catch (Exception e) {
-            log.debug("[sendSimpleMessage] 회원 가입 중 오류 발생", e);
+            log.error("[sendEmailAuthMessage] 메일 발송 중 오류 발생: {}", e.getMessage());
+            throw new Exception("메일 발송 중 오류가 발생했습니다.", e);
         }
 
         return code;
