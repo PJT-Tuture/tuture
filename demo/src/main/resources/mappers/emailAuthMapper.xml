@@ -5,9 +5,9 @@
 <mapper namespace="com.tuture.demo.model.dao.EmailAuthDao">
     <insert id="insertCode" parameterType="EmailCodeDto">
         INSERT INTO emailauth (email, code, expiration_date)
-        VALUES (#{email}, #{code}, #{expiration_date})
+        VALUES (#{email}, #{code}, #{expirationDate})
     </insert>
-    <select id="selectByEmail" parameterType="String">
-        SELECT * FROM emailauth WHERE email = #{email}
+    <select id="selectByEmail" parameterType="String" resultType="EmailCodeDto">
+        SELECT email, code, expiration_date AS expirationDate FROM emailauth WHERE email = #{email}
     </select>
 </mapper>

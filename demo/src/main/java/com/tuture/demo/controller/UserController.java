@@ -66,22 +66,19 @@ public class UserController {
      * @return null
      */
     @GetMapping("/send-email/{email}")
-    public ResponseEntity<?> sendEmail(@PathVariable String email) {
+    public ResponseEntity<?> sendEmail(@PathVariable String email) throws Exception {
         log.debug("[sendEmail] 이메일 인증 진행. userEmail : {} ", email);
-        try {
-            // 이메일 중복 체크
-            if (userService.isUniqueEmail(email)) {
-                // 메일 보내기
-                String code = emailAuthService.sendEmailAuthMessage(email);
-                // email, code 저장
-                emailAuthService.saveEmailCode(email, code);
-            }
-            log.debug("[sendEmail] 인증코드 발송완료.");
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            log.error("[sendEmail] 이메일 인증 진행 중 오류 발생");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        // 이메일 중복 체크
+        String code = null;
+        if (userService.isUniqueEmail(email)) {
+            // 메일 보내기
+//            String code = emailAuthService.sendEmailAuthMessage(email);
+            code = emailAuthService.sendEmailAuth(email);
+            // email, code 저장
+            emailAuthService.saveEmailCode(email, code);
         }
+        log.info(code);
+        return ResponseEntity.ok(code);
     }
 
     /**
