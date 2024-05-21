@@ -52,6 +52,12 @@ public class EmailAuthService {
         return code;
     }
 
+    // SSAFY 방화벽 문제로 smtp연결이 되지 않아 무조건 ok응답을 보내는 메소드 생성
+    public String sendEmailAuth(String email) {
+        String code = createRandomCode();
+        return createRandomCode();
+    }
+
     private MimeMessage createMessage(String email, String code) throws MessagingException {
         MimeMessage message = javaMailSender.createMimeMessage();
 
