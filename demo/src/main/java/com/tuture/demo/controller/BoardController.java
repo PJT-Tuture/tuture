@@ -1,6 +1,6 @@
 package com.tuture.demo.controller;
 
-import com.tuture.demo.global.elasticsearch.BoardSearchService;
+//import com.tuture.demo.global.elasticsearch.BoardSearchService;
 import com.tuture.demo.model.domain.Board;
 import com.tuture.demo.model.domain.User;
 import com.tuture.demo.model.dto.AddBoardDto;
@@ -24,8 +24,8 @@ public class BoardController {
 
     @Autowired
     private final BoardService boardService;
-    @Autowired
-    private final BoardSearchService boardSearchService;
+//    @Autowired
+//    private final BoardSearchService boardSearchService;
 
     @GetMapping
     public ResponseEntity<List<Board>> getBoardList() {
@@ -84,21 +84,20 @@ public class BoardController {
 //            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 //        }
     }
-
     @GetMapping("/tags")
     public ResponseEntity<List<Board>> getBoardsByTagIds(@Valid @RequestParam List<Long> tagIds) {
         List<Board> boards = boardService.getBoardsByTagIds(tagIds);
         return ResponseEntity.ok(boards);
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<List<Board>> search(@Valid @RequestParam(value = "page", defaultValue = "1") int page,
-                                              @Valid @RequestParam(value = "condition", required = false) String condition,
-                                              @Valid @RequestParam(value = "keyword", required = false) String keyword,
-                                              @Valid @RequestParam(value = "orderBy", required = false) String orderBy,
-                                              @Valid @RequestParam(value = "orderByDir", required = false) String orderByDir,
-                                              @Valid @RequestParam(value = "tagIds", required = false) List<Long> tagIds) {
-        List<Board> results = boardSearchService.search(page, condition, keyword, orderBy, orderByDir, tagIds);
-        return ResponseEntity.ok(results);
-    }
+//    @GetMapping("/search")
+//    public ResponseEntity<List<Board>> search(@Valid @RequestParam(value = "page", defaultValue = "1") int page,
+//                                              @Valid @RequestParam(value = "condition", required = false) String condition,
+//                                              @Valid @RequestParam(value = "keyword", required = false) String keyword,
+//                                              @Valid @RequestParam(value = "orderBy", required = false) String orderBy,
+//                                              @Valid @RequestParam(value = "orderByDir", required = false) String orderByDir,
+//                                              @Valid @RequestParam(value = "tagIds", required = false) List<Long> tagIds) {
+//        List<Board> results = boardSearchService.search(page, condition, keyword, orderBy, orderByDir, tagIds);
+//        return ResponseEntity.ok(results);
+//    }
 }
