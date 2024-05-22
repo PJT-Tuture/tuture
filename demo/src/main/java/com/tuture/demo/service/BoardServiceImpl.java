@@ -33,7 +33,11 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public BoardDetailDto.Response getBoardDetail(Long boardId, Long loggedInUserId) {
+
         Board board = findBoardById(boardId);
+        int viewCnt = board.getViewCnt() + 1;
+        board.setViewCnt(viewCnt);
+        boardDao.updateBoard(board);
         return BoardDetailDto.Response.boardToResponse(board, loggedInUserId);
     }
     @Override

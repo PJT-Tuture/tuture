@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LanguageTagDto {
-    @JsonProperty("tag_id")
+    @JsonProperty("id")
     private Long tagId;
     private String name;
 }
