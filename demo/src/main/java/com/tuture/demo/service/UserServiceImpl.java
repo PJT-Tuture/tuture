@@ -39,10 +39,10 @@ public class UserServiceImpl implements UserService{
                     .msg("닉네임은 2글자 이상, 10글자 이하만 가능 합니다.")
                     .build();
         }
-        if (!containsSpecialCharacter(nickname)) {
+        if (containsSpecialCharacter(nickname)) {
             return ValidNicknameResponse.builder()
                     .status(400)
-                    .msg("특수문자는 포함할 수 없습니다.")
+                    .msg("특수문자를 포함할 수 없습니다.")
                     .build();
         }
         if (!isUniqueNickname(nickname)){
@@ -123,8 +123,10 @@ public class UserServiceImpl implements UserService{
         return nickname != null && nickname.length() >= 2 && nickname.length() <= 10;
     }
 
-    private boolean containsSpecialCharacter(String nickname){
-        return !nickname.matches("[a-zA-Z0-9]*");
+    private boolean containsSpecialCharacter(String nickname) {
+        // 특수 문자에 해당하는 정규 표현식
+        String specialCharacters = "[^a-zA-Z0-9가-힣]";
+        return nickname.matches(".*" + specialCharacters + ".*");
     }
 
     private boolean isUniqueNickname(String nickname){

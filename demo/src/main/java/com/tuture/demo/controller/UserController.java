@@ -76,6 +76,8 @@ public class UserController {
             code = emailAuthService.sendEmailAuth(email);
             // email, code 저장
             emailAuthService.saveEmailCode(email, code);
+        } else {
+            return new ResponseEntity<>("이미 존재하는 이메일 입니다.", HttpStatus.BAD_REQUEST);
         }
         log.info(code);
         return ResponseEntity.ok(code);
@@ -103,6 +105,7 @@ public class UserController {
     public ResponseEntity<?> removeUser(@AuthenticationPrincipal User loginUser,
                                         @RequestParam(value = "p") String password) {
         // 로그인되어있는 상태의 유저의 아이디로 가져온 유저 정보의 비밀번호와 입력받은 비밀번호가 일치하면 삭제
+        System.out.println(loginUser.getId());
         User user = userService.findUserById(loginUser.getId());
         if (!user.getPassword().equals(password)) {
             throw new UserException(ErrorCode.INVALID_PASSWORD);
