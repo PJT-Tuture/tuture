@@ -29,12 +29,12 @@
     <update id="updateUser"
             parameterType="User">
         UPDATE user
-        SET nickname = #{nickname}, password = #{password}, profile_image = #{profileImg}
+        SET nickname = #{nickname}, password = #{password}, profile_image = #{profileImage}
         WHERE id = #{id}
     </update>
 
     <!-- 페이징된 게시글 목록을 가져오는 쿼리 -->
-    <select id="selectMyBoardList" parameterType="map" resultType="User">
+    <select id="selectMyBoardList" parameterType="map" resultType="Board">
         SELECT *
         FROM board
         WHERE writer_id = #{id}
@@ -46,5 +46,11 @@
         SELECT COUNT(*)
         FROM board
         WHERE writer_id = #{id}
+    </select>
+
+    <select id="getTagsByBoardId" parameterType="long" resultType="BoardLanguageDto">
+        SELECT *
+        FROM board_language
+        WHERE board_id = #{id}
     </select>
 </mapper>

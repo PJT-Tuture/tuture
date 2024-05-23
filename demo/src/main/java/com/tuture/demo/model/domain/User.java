@@ -21,6 +21,7 @@ public class User implements UserDetails {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     String password;
     String nickname;
+    @JsonProperty("profileImg")
     String profileImage;
 
     @Override

@@ -7,10 +7,7 @@ import com.tuture.demo.global.security.JwtTokenProvider;
 import com.tuture.demo.model.dao.UserDao;
 import com.tuture.demo.model.domain.Board;
 import com.tuture.demo.model.domain.User;
-import com.tuture.demo.model.dto.BoardListResponse;
-import com.tuture.demo.model.dto.SignInDto;
-import com.tuture.demo.model.dto.SignUpDto;
-import com.tuture.demo.model.dto.ValidNicknameResponse;
+import com.tuture.demo.model.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -39,10 +36,10 @@ public class UserServiceImpl implements UserService{
                     .msg("닉네임은 2글자 이상, 10글자 이하만 가능 합니다.")
                     .build();
         }
-        if (!containsSpecialCharacter(nickname)) {
+        if (containsSpecialCharacter(nickname)) {
             return ValidNicknameResponse.builder()
                     .status(400)
-                    .msg("특수문자는 포함할 수 없습니다.")
+                    .msg("특수문자를 포함할 수 없습니다.")
                     .build();
         }
         if (!isUniqueNickname(nickname)){
@@ -113,18 +110,26 @@ public class UserServiceImpl implements UserService{
         int offset = (page - 1) * limit; // 페이지가 1부터 시작한다고 가정
 
         List<Board> boards = userDao.selectMyBoardList(id, offset, limit);
+        List<List<BoardLanguageDto>> tags = new ArrayList<>();
+        for (Board board: boards) {
+            List<BoardLanguageDto> tag = userDao.getTagsByBoardId(board.getId());
+            tags.add(tag);
+        }
+
         int totalCnt = userDao.countMyBoardList(id);
 
         return BoardListResponse.builder()
-                .boards(boards).totalCnt(totalCnt).build();
+                .boards(boards).totalCnt(totalCnt).tags(tags).build();
     }
 
     private boolean isValidLengthNickname(String nickname){
         return nickname != null && nickname.length() >= 2 && nickname.length() <= 10;
     }
 
-    private boolean containsSpecialCharacter(String nickname){
-        return !nickname.matches("[a-zA-Z0-9]*");
+    private boolean containsSpecialCharacter(String nickname) {
+        // 특수 문자에 해당하는 정규 표현식
+        String specialCharacters = "[^a-zA-Z0-9가-힣]";
+        return nickname.matches(".*" + specialCharacters + ".*");
     }
 
     private boolean isUniqueNickname(String nickname){

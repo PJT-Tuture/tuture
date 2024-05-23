@@ -3,6 +3,7 @@ package com.tuture.demo.controller;
 import com.tuture.demo.global.exception.ErrorCode;
 import com.tuture.demo.global.exception.exceptionClasses.SigninException;
 import com.tuture.demo.global.exception.exceptionClasses.UserException;
+import com.tuture.demo.model.domain.Board;
 import com.tuture.demo.model.domain.User;
 import com.tuture.demo.model.dto.*;
 import com.tuture.demo.service.EmailAuthService;
@@ -10,10 +11,17 @@ import com.tuture.demo.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -76,6 +84,8 @@ public class UserController {
             code = emailAuthService.sendEmailAuth(email);
             // email, code 저장
             emailAuthService.saveEmailCode(email, code);
+        } else {
+            return new ResponseEntity<>("이미 존재하는 이메일 입니다.", HttpStatus.BAD_REQUEST);
         }
         log.info(code);
         return ResponseEntity.ok(code);
@@ -103,6 +113,7 @@ public class UserController {
     public ResponseEntity<?> removeUser(@AuthenticationPrincipal User loginUser,
                                         @RequestParam(value = "p") String password) {
         // 로그인되어있는 상태의 유저의 아이디로 가져온 유저 정보의 비밀번호와 입력받은 비밀번호가 일치하면 삭제
+        System.out.println(loginUser.getId());
         User user = userService.findUserById(loginUser.getId());
         if (!user.getPassword().equals(password)) {
             throw new UserException(ErrorCode.INVALID_PASSWORD);
@@ -137,11 +148,26 @@ public class UserController {
 
     @PutMapping("/basic")
     public ResponseEntity<?> modifyUserBasic(@AuthenticationPrincipal User loginUser,
-                                             @RequestBody UpdateUserBasicDTO.Request request) {
+                                             @RequestPart(value = "json") UpdateUserBasicDTO.Request request,
+                                             @RequestPart(required = false) MultipartFile profileImg) {
         try {
-            // 로그인된 사용자의 정보를 업데이트
-            loginUser.setNickname(request.getNickname());
-            loginUser.setProfileImage(request.getProfile_img());
+            File imageFolder = new File("profileImg/");
+            if (!imageFolder.exists()) {
+                imageFolder.mkdir();
+            }
+            if (!profileImg.isEmpty() && profileImg.getSize() != 0) {
+                String today = Long.toString(System.currentTimeMillis());
+                String newImageName = today + "_" + profileImg.getOriginalFilename();
+
+                File saveFile = new File(imageFolder.getAbsolutePath(), newImageName);
+
+                profileImg.transferTo(saveFile);
+                loginUser.setProfileImage(newImageName);
+            }
+
+            if (!request.getNickname().equals("")) {
+                loginUser.setNickname(request.getNickname());
+            }
 
             // 사용자 정보 업데이트 호출
             User updatedUser = userService.modifyUser(loginUser);
@@ -152,11 +178,20 @@ public class UserController {
         }
     }
 
+    @GetMapping("/image/{imgFileName}")
+    public ResponseEntity<?> getImage(@PathVariable String imgFileName) {
+        File file = new File("image", imgFileName);
+        Resource imgResource = new FileSystemResource(file);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + imgFileName + "\"")
+                .body(imgResource);
+    }
+
     @PutMapping("/password")
     public ResponseEntity<?> modifyUserPassword(@AuthenticationPrincipal User loginUser,
                                                 @RequestBody UpdatePasswordDto request) {
         if (!loginUser.getPassword().equals(request.getCurPassword())) {
-            throw new UserException(ErrorCode.INCORREXT_PASSWORD);
+            throw new UserException(ErrorCode.INCORRECT_PASSWORD);
         }
         loginUser.setPassword(request.getNewPassword());
         userService.modifyUser(loginUser);
@@ -173,7 +208,8 @@ public class UserController {
     @GetMapping("/myboard")
     public ResponseEntity<?> getMyBoardList(@AuthenticationPrincipal User loginUser,
                                             @RequestParam(value = "page", defaultValue = "1") int page) {
-        return ResponseEntity.ok(userService.getMyBoardList(loginUser.getId(), page));
+        BoardListResponse myBoardList = userService.getMyBoardList(loginUser.getId(), page);
+        return ResponseEntity.ok(myBoardList);
     }
 }
 
