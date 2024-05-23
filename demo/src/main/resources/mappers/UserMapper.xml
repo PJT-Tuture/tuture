@@ -29,7 +29,7 @@
     <update id="updateUser"
             parameterType="User">
         UPDATE user
-        SET nickname = #{nickname}, password = #{password}, profile_image = #{profileImg}
+        SET nickname = #{nickname}, password = #{password}, profile_image = #{profileImage}
         WHERE id = #{id}
     </update>
 
