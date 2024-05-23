@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tuture.demo.model.dao.BoardDao">
+
+    <select id="getBoardList"
+            resultType="Board">
+        SELECT * FROM board
+    </select>
+
+    <select id="getBoardById" resultType="Board">
+        SELECT * FROM board
+        WHERE id = #{id}
+    </select>
+
+    <insert id="insertBoard"
+            parameterType="Board" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO board (title, writer_id, reg_date, view_cnt, writer_nickname, content, region, due_date,
+        role_category, img_url)
+        VALUES (#{title}, #{writerId}, #{regDate}, #{viewCnt}, #{writerNickname}, #{content}, #{region},
+        #{dueDate}, #{roleCategory}, #{imgUrl})
+    </insert>
+
+    <update id="updateBoard"
+            parameterType="Board">
+        UPDATE board
+        SET title = #{title}, content = #{content}, region = #{region}, due_date = #{dueDate}, view_cnt = #{viewCnt},
+        role_category = #{roleCategory}, img_url = #{imgUrl}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteBoard" parameterType="Long">
+        DELETE from board
+        WHERE id = #{id}
+    </delete>
+
+    <select id="getBoardsByTagIds" parameterType="list" resultType="Board">
+        SELECT DISTINCT board.*
+        FROM board
+        JOIN board_language ON board.id = board_language.board_id
+        WHERE board_language.lan_tag_id IN
+        <foreach item="tagId" collection="list" open="(" separator="," close=")">
+            #{tagId}
+        </foreach>
+    </select>
+
+</mapper>

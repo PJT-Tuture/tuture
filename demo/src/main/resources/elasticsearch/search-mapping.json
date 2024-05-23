@@ -1,0 +1,41 @@
+{
+  "properties": {
+    "id": {
+      "type": "keyword"
+    },
+    "title": {
+      "type": "text",
+      "analyzer": "nori"
+    },
+    "content": {
+      "type": "text",
+      "analyzer": "nori"
+    },
+    "writerNickname": {
+      "type": "text",
+      "analyzer": "nori"
+    },
+    "imgUrl": {
+      "type": "text"
+    },
+    "viewCnt": {
+      "type": "integer"
+    },
+    "dueDate": {
+      "type": "date",
+      "format": "yyyy-MM-dd"
+    },
+    "region": {
+      "type": "text"
+    },
+    "regDate": {
+      "type": "date"
+    },
+    "roleCategory": {
+      "type": "keyword"
+    },
+    "tags": {
+      "type": "keyword"
+    }
+  }
+}

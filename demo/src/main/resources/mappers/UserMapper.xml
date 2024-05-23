@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tuture.demo.model.dao.UserDao">
+    <insert id="insertUser"
+            parameterType="SignUpDto">
+        INSERT INTO user (email, password, nickname, profile_image)
+        VALUES (#{email}, #{password}, #{nickname}, #{profileImg})
+    </insert>
+
+    <select id="selectUserById" parameterType="long" resultType="User">
+        SELECT * FROM user WHERE id = #{id}
+    </select>
+
+    <select id="selectUserByNickname" parameterType="String" resultType="User">
+        SELECT * FROM user WHERE nickname = #{nickname}
+    </select>
+
+    <select id="selectUserByEmail" parameterType="String" resultType="User">
+        SELECT * FROM user WHERE email = #{email}
+    </select>
+
+    <delete id="deleteUserById" parameterType="long">
+        DELETE user
+        WHERE id = #{id}
+    </delete>
+
+    <update id="updateUser"
+            parameterType="User">
+        UPDATE user
+        SET nickname = #{nickname}, password = #{password}, profile_image = #{profileImage}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 페이징된 게시글 목록을 가져오는 쿼리 -->
+    <select id="selectMyBoardList" parameterType="map" resultType="Board">
+        SELECT *
+        FROM board
+        WHERE writer_id = #{id}
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <!-- 총 게시글 수를 가져오는 쿼리 -->
+    <select id="countMyBoardList" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM board
+        WHERE writer_id = #{id}
+    </select>
+
+    <select id="getTagsByBoardId" parameterType="long" resultType="BoardLanguageDto">
+        SELECT *
+        FROM board_language
+        WHERE board_id = #{id}
+    </select>
+</mapper>
