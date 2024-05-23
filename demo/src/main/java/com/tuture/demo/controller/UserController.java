@@ -3,6 +3,7 @@ package com.tuture.demo.controller;
 import com.tuture.demo.global.exception.ErrorCode;
 import com.tuture.demo.global.exception.exceptionClasses.SigninException;
 import com.tuture.demo.global.exception.exceptionClasses.UserException;
+import com.tuture.demo.model.domain.Board;
 import com.tuture.demo.model.domain.User;
 import com.tuture.demo.model.dto.*;
 import com.tuture.demo.service.EmailAuthService;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -189,7 +191,7 @@ public class UserController {
     public ResponseEntity<?> modifyUserPassword(@AuthenticationPrincipal User loginUser,
                                                 @RequestBody UpdatePasswordDto request) {
         if (!loginUser.getPassword().equals(request.getCurPassword())) {
-            throw new UserException(ErrorCode.INCORREXT_PASSWORD);
+            throw new UserException(ErrorCode.INCORRECT_PASSWORD);
         }
         loginUser.setPassword(request.getNewPassword());
         userService.modifyUser(loginUser);
@@ -206,7 +208,8 @@ public class UserController {
     @GetMapping("/myboard")
     public ResponseEntity<?> getMyBoardList(@AuthenticationPrincipal User loginUser,
                                             @RequestParam(value = "page", defaultValue = "1") int page) {
-        return ResponseEntity.ok(userService.getMyBoardList(loginUser.getId(), page));
+        BoardListResponse myBoardList = userService.getMyBoardList(loginUser.getId(), page);
+        return ResponseEntity.ok(myBoardList);
     }
 }
 

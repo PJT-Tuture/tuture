@@ -7,10 +7,7 @@ import com.tuture.demo.global.security.JwtTokenProvider;
 import com.tuture.demo.model.dao.UserDao;
 import com.tuture.demo.model.domain.Board;
 import com.tuture.demo.model.domain.User;
-import com.tuture.demo.model.dto.BoardListResponse;
-import com.tuture.demo.model.dto.SignInDto;
-import com.tuture.demo.model.dto.SignUpDto;
-import com.tuture.demo.model.dto.ValidNicknameResponse;
+import com.tuture.demo.model.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -113,10 +110,16 @@ public class UserServiceImpl implements UserService{
         int offset = (page - 1) * limit; // 페이지가 1부터 시작한다고 가정
 
         List<Board> boards = userDao.selectMyBoardList(id, offset, limit);
+        List<List<BoardLanguageDto>> tags = new ArrayList<>();
+        for (Board board: boards) {
+            List<BoardLanguageDto> tag = userDao.getTagsByBoardId(board.getId());
+            tags.add(tag);
+        }
+
         int totalCnt = userDao.countMyBoardList(id);
 
         return BoardListResponse.builder()
-                .boards(boards).totalCnt(totalCnt).build();
+                .boards(boards).totalCnt(totalCnt).tags(tags).build();
     }
 
     private boolean isValidLengthNickname(String nickname){
