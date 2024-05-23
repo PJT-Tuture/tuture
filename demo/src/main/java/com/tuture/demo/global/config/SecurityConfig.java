@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -30,10 +31,29 @@ public class SecurityConfig {
 
         // 모든 경로에 대한 권한 해제코드 : 테스트시 사용!!
         http.csrf(AbstractHttpConfigurer::disable)
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/user/*").permitAll()
-                        .anyRequest().permitAll());
-        // 모든페이지 접근 허용
+                        .anyRequest().permitAll())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+//        // HTTP 요청 권한 설정 예시
+//        http.authorizeHttpRequests(authorizeRequests -> authorizeRequests
+//                .antMatchers("/public/**").permitAll()
+//                .anyRequest().authenticated());
+
+//        http
+//                .csrf(AbstractHttpConfigurer::disable)
+//                .httpBasic(AbstractHttpConfigurer::disable)
+//                .formLogin(AbstractHttpConfigurer::disable)
+//                .authorizeHttpRequests((authorize) -> authorize
+//                        .requestMatchers("/user/signup/**", "/user/signin/**", "/user/send-email/**", "/user/verify-email","/board/**").permitAll()
+//                        .anyRequest().authenticated())
+//                .sessionManagement(session -> session
+//                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                );
+
+
         // exceptionHandler
         http.exceptionHandling(exceptionHandling -> exceptionHandling
                 .authenticationEntryPoint(new CustomAuthenticationEntryPoint(objectMapper))

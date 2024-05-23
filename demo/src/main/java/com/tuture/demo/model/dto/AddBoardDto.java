@@ -28,7 +28,7 @@ public class AddBoardDto {
         private String dueDate;
         private String region;
         private String roleCategory;
-        private List<TagDto> tags;
+        private List<LanguageTagDto> tags;
         private String imgUrl;
 
         public static Board addBoardDtoToBoard(AddBoardDto.Request request){

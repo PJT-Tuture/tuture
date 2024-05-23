@@ -8,9 +8,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-@Service
+
 @RequiredArgsConstructor
 @Slf4j
+@Service
 public class UserDetailServiceImpl implements UserDetailsService {
 
     private final UserDao userDao;

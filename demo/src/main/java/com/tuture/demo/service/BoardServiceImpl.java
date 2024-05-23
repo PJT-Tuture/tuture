@@ -1,12 +1,13 @@
 package com.tuture.demo.service;
 
 import com.tuture.demo.model.dao.BoardDao;
+import com.tuture.demo.model.dao.BoardLanguageDao;
 import com.tuture.demo.model.domain.Board;
 import com.tuture.demo.model.dto.AddBoardDto;
-import com.tuture.demo.model.dto.SearchCondition;
+import com.tuture.demo.model.dto.BoardDetailDto;
+import com.tuture.demo.model.dto.LanguageTagDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +20,7 @@ import java.util.List;
 public class BoardServiceImpl implements BoardService{
 
     private final BoardDao boardDao;
-
+    private final BoardLanguageDao boardLanguageDao;
     @Override
     public List<Board> getBoardList(){
         return boardDao.getBoardList();
@@ -31,10 +32,23 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
+    public BoardDetailDto.Response getBoardDetail(Long boardId, Long loggedInUserId) {
+
+        Board board = findBoardById(boardId);
+        int viewCnt = board.getViewCnt() + 1;
+        board.setViewCnt(viewCnt);
+        boardDao.updateBoard(board);
+        return BoardDetailDto.Response.boardToResponse(board, loggedInUserId);
+    }
+    @Override
     @Transactional
     public int addBoard(AddBoardDto.Request request) {
         Board board = AddBoardDto.Request.addBoardDtoToBoard(request);
-        return boardDao.insertBoard(board);
+        boardDao.insertBoard(board);
+        for (LanguageTagDto tag : request.getTags()) {
+            boardLanguageDao.insertBoardLanguage(board.getId(), tag.getTagId());
+        }
+        return board.getId().intValue();
     }
 
     @Override
@@ -49,8 +63,9 @@ public class BoardServiceImpl implements BoardService{
         return boardDao.deleteBoard(id);
     }
 
+
     @Override
-    public List<Board> search(int page, SearchCondition condition) {
-        return boardDao.search(page, condition);
+    public List<Board> getBoardsByTagIds(List<Long> tagIds){
+        return boardDao.getBoardsByTagIds(tagIds);
     }
 }

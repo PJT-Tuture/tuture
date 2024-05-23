@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tuture.demo.model.dao.BoardLanguageDao">
+    <insert id="insertBoardLanguage" parameterType="BoardLanguageDto">
+        INSERT INTO board_language (board_id, lan_tag_id)
+        VALUES (#{boardId}, #{tagId})
+    </insert>
+</mapper>

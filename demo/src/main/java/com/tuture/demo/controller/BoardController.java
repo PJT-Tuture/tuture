@@ -1,14 +1,17 @@
 package com.tuture.demo.controller;
 
+//import com.tuture.demo.global.elasticsearch.BoardSearchService;
 import com.tuture.demo.model.domain.Board;
+import com.tuture.demo.model.domain.User;
 import com.tuture.demo.model.dto.AddBoardDto;
-import com.tuture.demo.model.dto.SearchCondition;
+import com.tuture.demo.model.dto.BoardDetailDto;
 import com.tuture.demo.service.BoardService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +24,8 @@ public class BoardController {
 
     @Autowired
     private final BoardService boardService;
-
+//    @Autowired
+//    private final BoardSearchService boardSearchService;
 
     @GetMapping
     public ResponseEntity<List<Board>> getBoardList() {
@@ -30,10 +34,12 @@ public class BoardController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Board> getBoardDetail(@Valid @PathVariable Long id){
-        Board board = boardService.findBoardById(id);
-        return ResponseEntity.ok(board);
+    public ResponseEntity<BoardDetailDto.Response> getBoardDetail(@Valid @PathVariable Long id, @AuthenticationPrincipal User loginUser) {
+        Long userId = loginUser.getId();
+        BoardDetailDto.Response boardDetail = boardService.getBoardDetail(id, userId);
+        return ResponseEntity.ok(boardDetail);
     }
+
     /**
      * 게시글 추가
      */
@@ -78,11 +84,20 @@ public class BoardController {
 //            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 //        }
     }
-
-    @GetMapping("/search")
-    public ResponseEntity<List<Board>> search(@Valid @RequestParam(value = "page", defaultValue = "1") int page,
-                                              @Valid @RequestBody SearchCondition condition) {
-        List<Board> boardList = boardService.search(page, condition);
-        return ResponseEntity.ok(boardList);
+    @GetMapping("/tags")
+    public ResponseEntity<List<Board>> getBoardsByTagIds(@Valid @RequestParam List<Long> tagIds) {
+        List<Board> boards = boardService.getBoardsByTagIds(tagIds);
+        return ResponseEntity.ok(boards);
     }
+
+//    @GetMapping("/search")
+//    public ResponseEntity<List<Board>> search(@Valid @RequestParam(value = "page", defaultValue = "1") int page,
+//                                              @Valid @RequestParam(value = "condition", required = false) String condition,
+//                                              @Valid @RequestParam(value = "keyword", required = false) String keyword,
+//                                              @Valid @RequestParam(value = "orderBy", required = false) String orderBy,
+//                                              @Valid @RequestParam(value = "orderByDir", required = false) String orderByDir,
+//                                              @Valid @RequestParam(value = "tagIds", required = false) List<Long> tagIds) {
+//        List<Board> results = boardSearchService.search(page, condition, keyword, orderBy, orderByDir, tagIds);
+//        return ResponseEntity.ok(results);
+//    }
 }

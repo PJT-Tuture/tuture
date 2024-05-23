@@ -1,6 +1,6 @@
 //package com.tuture.demo.global.config;
 //
-//import com.tuture.demo.global.elasticsearch.PostSearchRepository;
+//import com.tuture.demo.global.elasticsearch.BoardSearchRepository;
 //import org.elasticsearch.client.RestHighLevelClient;
 //import org.springframework.beans.factory.annotation.Value;
 //import org.springframework.context.annotation.Bean;
@@ -12,7 +12,7 @@
 //import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 //
 //@Configuration
-//@EnableElasticsearchRepositories(basePackageClasses = PostSearchRepository.class)
+//@EnableElasticsearchRepositories(basePackageClasses = BoardSearchRepository.class)
 //public class ElasticSearchConfig extends AbstractElasticsearchConfiguration {
 //
 //    @Value("${spring.elasticsearch.username}")
