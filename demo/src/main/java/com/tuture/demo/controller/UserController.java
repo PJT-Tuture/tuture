@@ -10,10 +10,16 @@ import com.tuture.demo.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
 
 @Slf4j
 @RestController
@@ -140,11 +146,26 @@ public class UserController {
 
     @PutMapping("/basic")
     public ResponseEntity<?> modifyUserBasic(@AuthenticationPrincipal User loginUser,
-                                             @RequestBody UpdateUserBasicDTO.Request request) {
+                                             @RequestPart(value = "json") UpdateUserBasicDTO.Request request,
+                                             @RequestPart(required = false) MultipartFile profileImg) {
         try {
-            // 로그인된 사용자의 정보를 업데이트
-            loginUser.setNickname(request.getNickname());
-            loginUser.setProfileImage(request.getProfile_img());
+            File imageFolder = new File("profileImg/");
+            if (!imageFolder.exists()) {
+                imageFolder.mkdir();
+            }
+            if (!profileImg.isEmpty() && profileImg.getSize() != 0) {
+                String today = Long.toString(System.currentTimeMillis());
+                String newImageName = today + "_" + profileImg.getOriginalFilename();
+
+                File saveFile = new File(imageFolder.getAbsolutePath(), newImageName);
+
+                profileImg.transferTo(saveFile);
+                loginUser.setProfileImage(newImageName);
+            }
+
+            if (!request.getNickname().equals("")) {
+                loginUser.setNickname(request.getNickname());
+            }
 
             // 사용자 정보 업데이트 호출
             User updatedUser = userService.modifyUser(loginUser);
@@ -153,6 +174,15 @@ public class UserController {
             e.printStackTrace();
             return new ResponseEntity<>("유저 정보 수정 실패", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/image/{imgFileName}")
+    public ResponseEntity<?> getImage(@PathVariable String imgFileName) {
+        File file = new File("image", imgFileName);
+        Resource imgResource = new FileSystemResource(file);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + imgFileName + "\"")
+                .body(imgResource);
     }
 
     @PutMapping("/password")
